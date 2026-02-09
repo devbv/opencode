@@ -1,0 +1,7 @@
+Searches OVERDARE documentation using RAG (Retrieval-Augmented Generation).
+Use this tool to find relevant OVERDARE API references, guides, and examples.
+
+Usage notes:
+  - Provide a clear, specific query describing what you want to find
+  - Returns relevant documentation snippets matching the query
+  - Requires 'overdare.vertexServiceAccountPath' to be configured in opencode.json (path to GCP service account JSON)

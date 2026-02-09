@@ -1158,6 +1158,14 @@ export namespace Config {
           prune: z.boolean().optional().describe("Enable pruning of old tool outputs (default: true)"),
         })
         .optional(),
+      overdare: z
+        .object({
+          vertexServiceAccountPath: z.string().optional().describe("Path to Google Cloud service account JSON file for Vertex AI RAG search"),
+          luauLspPath: z.string().optional().describe("Path to luau-lsp binary (default: binary directory의 luau-lsp)"),
+          typesPath: z.string().optional().describe("Path to overdare-types.d.lua (default: binary directory의 overdare-types.d.lua)"),
+        })
+        .optional()
+        .describe("OVERDARE configuration"),
       experimental: z
         .object({
           disable_paste_summary: z.boolean().optional(),

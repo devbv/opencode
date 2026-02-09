@@ -1,0 +1,13 @@
+Validates Luau script code for type errors and lint warnings using luau-lsp analyze.
+Call this tool BEFORE script.add to ensure code quality. Works without a Studio connection.
+
+Takes a single `source` parameter containing the Luau source code to validate.
+
+Returns a JSON object with:
+  - valid: true if no errors found
+  - errors: list of type/syntax errors with line, column, and message
+  - warnings: list of lint warnings with line, column, and message
+
+Configuration (opencode.json overdare section):
+  - overdare.luauLspPath: path to luau-lsp binary (default: "luau-lsp")
+  - overdare.typesPath: path to overdare-types.d.lua type definitions

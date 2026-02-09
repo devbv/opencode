@@ -27,6 +27,9 @@ import { LspTool } from "./lsp"
 import { Truncate } from "./truncation"
 import { PlanExitTool, PlanEnterTool } from "./plan"
 import { ApplyPatchTool } from "./apply_patch"
+import { StudioRpcTool } from "./studiorpc"
+import { OverdareSearchTool } from "./overdaresearch"
+import { ValidateLuaTool } from "./validatelua"
 
 export namespace ToolRegistry {
   const log = Log.create({ service: "tool.registry" })
@@ -115,6 +118,9 @@ export namespace ToolRegistry {
       //...(Flag.OPENCODE_EXPERIMENTAL_LSP_TOOL ? [LspTool] : []),
       //...(config.experimental?.batch_tool === true ? [BatchTool] : []),
       ...(Flag.OPENCODE_EXPERIMENTAL_PLAN_MODE && Flag.OPENCODE_CLIENT === "cli" ? [PlanExitTool, PlanEnterTool] : []),
+      StudioRpcTool,
+      OverdareSearchTool,
+      ValidateLuaTool,
       ...custom,
     ]
   }

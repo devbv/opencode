@@ -1,0 +1,14 @@
+Sends a JSON-RPC 2.0 request to the OVERDARE Studio instance over TCP.
+Use this tool to control the Studio client: browse level instances, add/delete scripts, manage instances, and more.
+
+Each call opens a new TCP connection to Studio (default: localhost:9100), sends the request, and returns the response.
+
+Supported methods:
+
+${methods}
+
+Usage notes:
+  - The method parameter is the JSON-RPC method name (e.g. "level.browse")
+  - The params parameter is an optional object of method parameters
+  - Connection host/port can be configured via STUDIO_HOST and STUDIO_PORT environment variables
+  - Timeout: 30 seconds per request

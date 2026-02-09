@@ -110,6 +110,17 @@ fi
 cp "$CLI_PATH" "$SIDECAR_PATH"
 chmod +x "$SIDECAR_PATH"
 echo -e "${GREEN}✓ Sidecar 복사 완료: $SIDECAR_NAME${NC}"
+
+# Companion 파일 복사 (luau-lsp, overdare-types.d.lua)
+DIST_BIN_DIR="./packages/opencode/dist/opencode-${PLATFORM}/bin"
+COMPANION_FILES=("luau-lsp" "overdare-types.d.lua")
+for f in "${COMPANION_FILES[@]}"; do
+    if [ -f "$DIST_BIN_DIR/$f" ]; then
+        echo -e "  ${GREEN}✓ Companion 파일 확인: $f${NC}"
+    else
+        echo -e "  ${YELLOW}⚠️  Companion 파일 없음: $f (dist에서 찾을 수 없음)${NC}"
+    fi
+done
 echo ""
 
 # 단계 3: Desktop 앱 빌드
@@ -119,6 +130,20 @@ cd packages/desktop
 bun run tauri build
 cd ../..
 echo -e "${GREEN}✓ Desktop 앱 빌드 완료${NC}"
+echo ""
+
+# Companion 파일을 앱 번들에 주입
+if [ "$OS" = "Darwin" ]; then
+    APP_MACOS_DIR="packages/desktop/src-tauri/target/release/bundle/macos/OpenCode Dev.app/Contents/MacOS"
+    if [ -d "$APP_MACOS_DIR" ]; then
+        for f in "${COMPANION_FILES[@]}"; do
+            if [ -f "$DIST_BIN_DIR/$f" ]; then
+                cp "$DIST_BIN_DIR/$f" "$APP_MACOS_DIR/$f"
+                echo -e "${GREEN}✓ 앱 번들에 복사: $f${NC}"
+            fi
+        done
+    fi
+fi
 echo ""
 
 # 빌드 결과 표시

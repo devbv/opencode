@@ -164,6 +164,21 @@ for (const item of targets) {
   })
 
   await $`rm -rf ./dist/${name}/bin/tui`
+
+  // Copy companion files (luau-lsp, overdare-types.d.lua) to bin/
+  const companionDir = path.resolve(dir, "../../bin")
+  const luauLspBin = item.os === "win32" ? "luau-lsp.exe" : "luau-lsp"
+  const luauLspSrc = path.join(companionDir, luauLspBin)
+  const typesSrc = path.join(companionDir, "overdare-types.d.lua")
+  if (fs.existsSync(luauLspSrc)) {
+    fs.copyFileSync(luauLspSrc, path.join("dist", name, "bin", luauLspBin))
+    console.log(`  copied ${luauLspBin}`)
+  }
+  if (fs.existsSync(typesSrc)) {
+    fs.copyFileSync(typesSrc, path.join("dist", name, "bin", "overdare-types.d.lua"))
+    console.log(`  copied overdare-types.d.lua`)
+  }
+
   await Bun.file(`dist/${name}/package.json`).write(
     JSON.stringify(
       {
